@@ -2,20 +2,22 @@
 // it dependencies in Browser
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {ProductFormComponent} from './productformcomponent/app.productform.component';
+import { ProductReactiveFormComponent } from './productreactiveformcomponent/app.productreactiveform.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, ProductFormComponent, ProductReactiveFormComponent
   ],
   imports: [
-    BrowserModule, FormsModule,
+    BrowserModule, FormsModule, ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ProductReactiveFormComponent]
 })
 export class AppModule { }

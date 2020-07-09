@@ -94,3 +94,84 @@ Programming With Angualar
 ======================================================================
 Angular Assignment 1
 Create a Calculator like Windows Calculator
+======================================================================
+1. @angular/core
+   1. NgModule, Component, Injectable, Pipe, Directice, Renderer2, ElementRef, HostListener, Input, Output, EventListener, etc.
+   2. OnInit, interface for Lifecycle
+2. @angular/common 
+   1. CommonModule 
+   2. @angular/common/http
+      1. HttpClientModule
+3. @angular/forms
+   1. FormsModule, ReactiveFormsModule
+   2. FormControl, FormGroup, FormBuilder, Validators, ect.
+4. @angular/router
+   1. RouterModule
+   2. Router, Route, Routes, ActivatedRoute, CanActivate, etc.
+5. @angular/platform-browser-dynamic
+   1. platformBrowserDynamic()
+6. @angular/platform-browser
+   1. BrowserModule
+
+=====================================================================================
+Use Angular Directive for UI Management
+- The reusable UI and Behavioral (custom attribute to HTML DOM Elements) objects
+- 3 Types of Directives
+  - Component Directive
+    - Each component is directive and we can reuse it as HTML UI Element
+  - Structural Directives
+    - Used for dynamically ADD / REMOVE DOM based on Data expressions 
+      - *ngFor, *ngIf, *ngSwitch-ngSwitchCase
+  - Attribute Directives
+    - The Custom Attribute for HTML DOM
+      - E.g. ngModel, routerLink, formControlName, formGroup
+    - Most of the Attribute directives can be used for Property-Binding  
+
+======================================================================================
+Reactive Forms aka Model-Drive-Forms aka Data-Driven-Forms
+<form> maped with ngForm internally
+FormGroup, the at-least one form to be submitted, the collection of FormControl
+FormControl is an editable element in form that is mapped with public property of the Mdoel class. The mapping is established using [formControlName] attribute directive of Angular
+1. Create a FormGroup with Mapping between Model Property and FormControl
+2. Apply mapping on HTML Editable Elements using [formControlName]
+3. Map the <form> tag with FormGroup using [formGroup] attribute directive
+4. Must hjave Submit button and the <form> tag must using (ngSubmit) event binding
+5. Use Validators for validation
+   1. Validators class with all Static methods
+      1. required(AbstractControl), requiredTrue(AbstractControl)
+         1. The Model property using this validators will auto-read the data from the FormControl and pass it this method
+      2. mainlength(int)/maxlength(int)/min(int)/max(int)
+      3. pattern(regEx|string)
+      4. email(AbstractControl)
+      5. nullValidator
+      6. compose(validators array as inpute parameter)
+         1. Used to apply / define validators on the Model properties
+   2. Validation Evaluation on HTML Template
+      1. <formGroup>.controls.<formControlName>.dirty, means its is changed
+      2. <formGroup>.controls.<formControlName>.invalid or !<formGroup>.controls.<formControlName>.valid , means the value is invalid
+      3. <formGroup>.controls.<formControlName>.errors.<Validation-Type>
+         1. Validation-Tye
+            1. required/requiredTrue
+            2. pattern
+            3. min/max
+            4. minlength/maxlength
+      4. Custom Validator
+         1. Written in class as a static method
+         2. The method can accept either AbstractControl or premptive type
+         3. The method must return 'any' 
+            1. If the value is valid then the method returns 'null'
+            2. If the value is invalid then the method will return JSON object e.g.
+               1. {invalid:true} / {valid:false} / {odd:true} 
+                  1. <formGroup>.controls.<formControlName>.errors.<return-json-key>
+                     1. return-json-key --> valid/invalid/odd
+6. Import 'reactiveFormsModule' to implement Reactive Forms in imports array of NgModule
+
+======================================================================================
+Assignment Day 4:
+1. Modify the Logic Class to Update and Delete the Product
+2. Generate Delete button for Each Table Row  for the Products table so that whern the button is clicked the Product will be deleted
+3. [Mandatory] Add Radio button above the Products Table for Sort and Reverse, When these radiot buttons are clicked the Table must be sorted/ reversed based on ProductName / Price
+4. Add validations for all Product properties like required/ Price cannot be -ve
+5. [Mandatory] Create a Custom validator to chech Uniqueness of ProductId. This means tthat when enduse enters ProductId and Press-Tab, the valdation shoud be executed to check if the ProductId is already available in array. (Hint: Access the Logic class in Custom validator)  
+    
+
