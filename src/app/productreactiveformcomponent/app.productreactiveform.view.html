@@ -1,7 +1,7 @@
 <div>
-    <h2>The Reactive Form Component</h2>
+    <h2>The Reactive Form Component</h2>   
     <!--The ngSubmit will post the formGroup value and perform validations-->
-    <form name="frmProduct" [formGroup]="frmProduct" (ngSubmit)="save()">
+    <form name="frmProduct" [formGroup]="frmProduct" (ngSubmit)="save()">     
         <div>
             <label>Product Row Id</label>
             <input type="text" formControlName="ProductRowId" name="ProductRowId">
@@ -16,8 +16,12 @@
         </div>
         <div>
             <label>Product Id</label>
-            <input type="text" formControlName="ProductId" name="ProductId">
-        </div>
+            <input type="text" formControlName="ProductId" name="ProductId" (keydown)="validateProductId()">
+            <div *ngIf="frmProduct.controls.ProductId.dirty && !frmProduct.controls.ProductId.valid">
+                <p *ngIf="frmProduct.controls.ProductId.errors.required">Value is must</p>
+                <p *ngIf="frmProduct.controls.ProductId.errors.isInValidProductId">Product Id already exists</p>
+             </div>
+            </div>
         <div>
             <label>Product Name</label>
             <input type="text" formControlName="ProductName" name="ProductName">
@@ -41,10 +45,35 @@
         <div>
             <label>Base Price</label>
             <input type="text" formControlName="BasePrice" name="BasePrice">
-        </div>
+            <div *ngIf="frmProduct.controls.BasePrice.dirty && !frmProduct.controls.BasePrice.valid">
+            <p *ngIf="frmProduct.controls.BasePrice.errors.required">Value is must</p>
+            <p *ngIf="frmProduct.controls.BasePrice.errors.negative">Value must be greater than 0</p>
+            </div>
+        </div>   
         <div>
             <input type="button" value="Clear" (click)="clear()">
             <input type="submit" value="Save" [disabled]="!frmProduct.valid">
+            <!-- <input type="button" value="Delete" (click)="delete()"> -->
+        </div>
+        <div class="frmProduct"> 
+            <br>
+            <hr>          
+            <div>
+              <label for="sortPrice">Price:</label>
+              <input id="lowest" type="radio" value="lowest" name="SortByPrice" formControlName="SortByPrice" (click)="sortLowest()" >
+              <label for="SortByPrice">Lowest</label>
+              <input id="highest" type="radio" value="highest" name="SortByPrice" formControlName="SortByPrice" (click)="sortHighest()">
+              <label for="SortByPrice">Highest</label>
+           </div>        
+        </div>
+        <div class="frmProduct">
+            <div>
+              <label for="sortName">ProductName:</label>
+              <input id="accending" type="radio" value="accending" name="SortByName" formControlName="SortByName" (click)="sortAccending()">
+              <label for="SortByName">Accending</label>
+              <input id="decending" type="radio" value="highest" name="SortByName" formControlName="SortByName" (click)="sortDecending()">
+              <label for="SortByName">Decending</label>
+           </div>                    
         </div>
     </form>
 </div>

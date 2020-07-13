@@ -6,6 +6,7 @@ import {Product} from '../model/app.product.model';
 import { Logic } from '../model/logic';
 import {Categories, Manufacturers} from '../model/app.constants';
 import {CustomValidator} from './app.custom.validators';
+import { SelectorMatcher } from '@angular/compiler';
 
 @Component({
   selector: 'app-productreactiveform-component',
@@ -49,12 +50,21 @@ export class ProductReactiveFormComponent implements OnInit {
             Validators.pattern('[0-9]+'),
             CustomValidator.CheckEven
           ])),
-       ProductId : new FormControl(this.product.ProductId),
+       ProductId : new FormControl(this.product.ProductId,
+         Validators.compose([
+            Validators.required
+         ])),
        ProductName : new FormControl(this.product.ProductName),
        CategoryName : new FormControl(this.product.CategoryName),
        Manufacturer : new FormControl(this.product.Manufacturer),
        Description : new FormControl(this.product.Description),
-       BasePrice : new FormControl(this.product.BasePrice)
+       BasePrice : new FormControl(this.product.BasePrice,
+         Validators.compose([
+            Validators.required,
+            CustomValidator.CheckPositiveValue
+         ])),
+        SortByPrice : new FormControl(this.product.BasePrice),
+        SortByName : new FormControl(this.product.ProductName)
     });
 
   }
@@ -87,4 +97,57 @@ export class ProductReactiveFormComponent implements OnInit {
       // set the value to FormGroup
       this.frmProduct.setValue(prd);
    }
+
+   //  delete(): void{
+   //     let msg = this.logic.deleteProduct();
+   //     console.log(msg);
+   //   }
+
+   //  getProductToDelete() : Product
+   //  {
+   //     console.log(this.frmProduct.getRawValue());
+   //     return this.frmProduct.getRawValue();
+   //  }
+
+    validateProductId():void{
+         alert("tab");
+         CustomValidator.IsValidProduct;
+      }
+
+      sortLowest():void{
+         this.products.sort((a:Product , b: Product) => this.GetLowestSort(a,b));
+      }
+      sortHighest():void{
+         this.products.sort((a:Product , b: Product) => this.GetHighestSort(a,b));
+      }
+      sortAccending():void{
+         this.products.sort((a:Product , b: Product) => this.GetAccending(a,b));
+      }
+      sortDecending():void{
+         this.products.sort((a:Product , b: Product) => this.GetDecending(a,b));
+      }
+      GetLowestSort(a:Product,b:Product): number{
+         if(a.BasePrice < b.BasePrice)
+          return -1;
+         else 
+          return 0;
+      }
+      GetHighestSort(a:Product,b:Product): number{
+         if(a.BasePrice > b.BasePrice)
+          return -1;
+         else 
+          return 0;
+      }
+      GetAccending(a:Product,b:Product): number{
+         if(a.ProductName < b.ProductName)
+          return -1;
+         else 
+          return 0;
+      }
+      GetDecending(a:Product,b:Product): number{
+         if(a.ProductName > b.ProductName)
+          return -1;
+         else 
+          return 0;
+      }
 }
